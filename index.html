@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp2485682.jpg '); 
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center; 
+            width: 98%;
+    height: 90vh;
+    /* background-attachment: fixed; */
+            
+        }
+        .venky:hover {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 50px auto;
+            background-color:purple;
+        }
+        th, td {
+            border: 3px solid black;
+            padding: 8px;
+            text-align: left;
+            color: whitesmoke;
+        }
+        th {
+            background-color:rgb(244, 63, 153);
+            
+            
+        }
+        .satish{
+            height: 2px;
+            width: 310px;
+            background-color:goldenrod;
+            border-radius: 30px ;
+           padding: 150px;
+           position: relative;
+           margin-top: 100px;
+           margin-top: 120px;
+           margin-left: -20px;
+           left: 37%;
+           background:linear-gradient(to left top,rgb(193, 187, 187),#7403ed3c,rgb(142, 132, 141));
+           box-shadow: 15px 15px 5px  white;
+           z-index: 999;
+           
+        }
+        @media only screen and (max-width: 768px) {
+            body {
+                background-color: aqua;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            .satish {
+                width: 90%;
+                left: 5%;
+            }
+        }
+        
+    </style>
+</head>
+<body style="background-color: aqua;">
+    <div class="venky">
+        <!-- <h4 style="height: 50px;width: 1500px;border:3px solid green;border-radius: 15px;font-style: italic;letter-spacing: 1px;color: white;text-align: center;">1.Efficient Mail Sorting and Delivery: ZIP codes are designed to facilitate the efficient sorting and delivery of mail by dividing regions into specific areas.<br>2.    Each ZIP code represents a particular geographic area, such as a town or part of a city, making it easier for postal services to organize mail and deliver it to the correct destination.</h4> -->
+    </div>
+    <div class="satish">
+        <h1 style="text-decoration: double;margin-top: -45px;font-family: Georgia, 'Times New Roman', Times, serif;font-style: italic;line-clamp: 25px;text-align: center;">zip code locators in india:</h1>
+        <form action="">
+        <input style="margin-left: 50px; color:RED;border-radius: 5px;" placeholder="enter your zip code " id="searchInput"></input>
+        <!-- <select>
+            <option style="padding-right:-5px;color: blue;border-radius: 5px;" value="INDIA">zip codes</option>
+            <option value="521183">521183</option>
+            <option value="521184">521184</option>
+            <option value="521185">521185</option>
+            <option value="500045">500045</option>
+            
+        </select> -->
+        <input style="color: blueviolet;border-radius: 5px;" type="submit"></input>
+    </form>
+    </div>
+    <!-- <h1 style="margin: 100px;margin-bottom: -180px;margin-left: 260px;color:red;font-family: Verdana, Geneva, Tahoma, sans-serif;list-style-type: armenian;letter-spacing: 2px;font-style: italic;margin-top: 20px;">RETRIEVING INFORMATION ABOUT ZIP CODES IN INDIA</h1>
+    <! <div style="margin-left:600px;margin-top: 250px;">  -->
+          <!-- <button id="showDetailsBtn" style="color: black;background-color:palevioletred;font-style: italic;height: 70px;width: 250px;border-radius: 20px;background-color: brown;">Show Details</button><br><br> 
+        <form> -->
+            <!-- <input id="searchInput" style="background-color:yellow; color:blue; height: 40px; width: 300px; border-radius: 10px;" type="search" placeholder="Enter details"></input><br><br>
+            <input style="background-color: blueviolet;font-style: italic;border-radius: 7px;height: 30px;width: 300px;" type="submit"> -->
+        </form> 
+    </div>  
+    <div class="project"></div>
+    <script>
+        // document.getElementById("showDetailsBtn").addEventListener("click", () => {
+        //     const pincode = "521183"; // Default pincode for now
+        //     fetchDetails(pincode);
+        // });
+
+        document.querySelector("form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const pincode = document.getElementById("searchInput").value;
+            fetchDetails(pincode);
+        });
+
+        function fetchDetails(pincode) {
+            const url = `https://indian-zipcodes.p.rapidapi.com/api/data?pincode=${pincode}`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '5f6ad288aamshb637f0abaf78701p1d7a1djsnc7b60b58dcb9',
+                    'X-RapidAPI-Host': 'indian-zipcodes.p.rapidapi.com'
+                }
+            };
+
+            fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    createTable(data);
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function createTable(data) {
+            document.getElementsByClassName("project")[0].innerHTML=""
+            const table = document.createElement('table');
+            const headers = Object.keys(data[0]);
+
+            // Create table header
+            const headerRow = document.createElement('tr');
+            headers.forEach(headerText => {
+                const header = document.createElement('th');
+                header.textContent = headerText.toUpperCase();
+                headerRow.appendChild(header);
+            });
+            table.appendChild(headerRow);
+
+            // Create table rows
+            data.forEach(obj => {
+                const row = document.createElement('tr');
+                headers.forEach(header => {
+                    const cell = document.createElement('td');
+                    cell.textContent = obj[header];
+                    row.appendChild(cell);
+                });
+                table.appendChild(row);
+            });
+
+            // Display table
+             var project=document.getElementsByClassName("project")
+            project[0].appendChild(table);
+        }
+    </script>
+</body>
+</html>
